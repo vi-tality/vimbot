@@ -1,0 +1,28 @@
+[package]
+name = "vim_bot"
+version = "0.1.0"
+authors = ["me"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+env_logger = "0.6"
+kankyo = "0.2"
+log = "0.4"
+
+[dependencies.serenity]
+default-features = false
+features = [
+    "cache",
+    "builder",
+    "client",
+    "framework",
+    "gateway",
+    "http",
+    "model",
+    "standard_framework",
+    "utils",
+    "rustls_backend",
+]
+version = "0.7"
