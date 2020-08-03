@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  vim_bot:
+    image: dieracdelta/vimbot
+    build:
+      context: .
+    environment:
+      - DISCORD_TOKEN=token
+      - CHANNEL_ID=123
+      - ROLE_ID=123
+      #- RUST_LOG=debug
