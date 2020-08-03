@@ -45,7 +45,9 @@ impl EventHandler for Handler {
     fn guild_member_addition(&self, ctx: Context, _guild_id: GuildId, mut member: Member) {
         let user_id = member.user_id();
         let _ = ChannelId(649328791692247053).say(&ctx.http, format!(r#"**`:normal iHi `**  {}  **`, you are our`**`<C-r>=GetDiscordUsers("{:?}")<CR>`**`user in this community of vim enthusiasts.`**"#, member.mention(), user_id.as_u64()));
-        if let Err(e) = member.add_role(&ctx, RoleId(648972141169213440)) {
+
+        let channel_id = env::var("CHANNEL_ID").expect("Expected a CHANNEL_ID in the environment");
+        if let Err(e) = member.add_role(&ctx, RoleId(channel_id)) {
             error!("Unable to add roles to {}: {}", member.display_name(), e);
         }
     }
@@ -84,7 +86,7 @@ fn main() {
     // `RUST_LOG` to debug`.
     env_logger::init();
 
-    let token = env::var("DISCORD_TOKEN").expect("Expected a token in the environment");
+    let token = env::var("DISCORD_TOKEN").expect("Expected a DISCORD_TOKEN in the environment");
 
     let mut client = Client::new(&token, Handler).expect("Err creating client");
 
