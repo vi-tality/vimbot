@@ -1,6 +1,6 @@
 FROM rust:latest
 
-WORKDIR /usr/src/myapp
+WORKDIR /usr/src/vim_bot
 
 COPY . .
 
