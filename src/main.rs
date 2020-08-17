@@ -45,8 +45,17 @@ impl EventHandler for Handler {
     }
     fn guild_member_addition(&self, ctx: Context, _guild_id: GuildId, mut member: Member) {
         let user_id = member.user_id();
-        let _ = ChannelId(661004496591257615).say(&ctx.http, format!(r#"**`:normal iHi `**  {}  **`, you are our`**`<C-r>=GetDiscordUsers("{:?}")<CR>`**`user in this community of vim enthusiasts.`**"#, member.mention(), user_id.as_u64()));
-        if let Err(e) = member.add_role(&ctx, RoleId(648972141169213440)) {
+        let channel_id = env::var("CHANNEL_ID")
+            .unwrap()
+            .parse::<u64>()
+            .expect("Expected a CHANNEL_ID in the environment");
+        let role_id = env::var("ROLE_ID")
+            .unwrap()
+            .parse::<u64>()
+            .expect("Expected a ROLE_ID in the environment");
+        let _ = ChannelId(channel_id).say(&ctx.http, format!(r#"**`:normal iHi `**  {}  **`, you are our`**`<C-r>=GetDiscordUsers("{:?}")<CR>`**`user in this community of vim enthusiasts.`**"#, member.mention(), user_id.as_u64()));
+
+        if let Err(e) = member.add_role(&ctx, RoleId(role_id)) {
             error!("Unable to add roles to {}: {}", member.display_name(), e);
         }
     }
@@ -77,7 +86,7 @@ group!({
 fn main() {
     // This will load the environment variables located at `./.env`, relative to
     // the CWD. See `./.env.example` for an example on how to structure this.
-    kankyo::load().expect("Failed to load .env file");
+    kankyo::load();
 
     // Initialize the logger to use environment variables.
     //
@@ -85,7 +94,7 @@ fn main() {
     // `RUST_LOG` to debug`.
     env_logger::init();
 
-    let token = env::var("DISCORD_TOKEN").expect("Expected a token in the environment");
+    let token = env::var("DISCORD_TOKEN").expect("Expected a DISCORD_TOKEN in the environment");
 
     let mut client = Client::new(&token, Handler).expect("Err creating client");
 
