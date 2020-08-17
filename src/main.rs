@@ -1,4 +1,4 @@
-//! Requires the 'framework' feature flag be enabled in your project's
+//!Requires the 'framework' feature flag be enabled in your project's
 //! `Cargo.toml`.
 //!
 //! This can be enabled by specifying the feature in the dependency section:
@@ -26,6 +26,7 @@ use serenity::{
 use std::{collections::HashSet, env, sync::Arc};
 
 use commands::{math::*, meta::*, owner::*};
+
 struct ShardManagerContainer;
 
 impl TypeMapKey for ShardManagerContainer {
@@ -44,7 +45,7 @@ impl EventHandler for Handler {
     }
     fn guild_member_addition(&self, ctx: Context, _guild_id: GuildId, mut member: Member) {
         let user_id = member.user_id();
-        let _ = ChannelId(649328791692247053).say(&ctx.http, format!(r#"**`:normal iHi `**  {}  **`, you are our`**`<C-r>=GetDiscordUsers("{:?}")<CR>`**`user in this community of vim enthusiasts.`**"#, member.mention(), user_id.as_u64()));
+        let _ = ChannelId(661004496591257615).say(&ctx.http, format!(r#"**`:normal iHi `**  {}  **`, you are our`**`<C-r>=GetDiscordUsers("{:?}")<CR>`**`user in this community of vim enthusiasts.`**"#, member.mention(), user_id.as_u64()));
         if let Err(e) = member.add_role(&ctx, RoleId(648972141169213440)) {
             error!("Unable to add roles to {}: {}", member.display_name(), e);
         }
@@ -70,7 +71,7 @@ impl EventHandler for Handler {
 group!({
     name: "general",
     options: {},
-    commands: [multiply, ping, iwantvi, iwantneovim, iwantemacs, idontwantvi, idontwantemacs, idontwantneovim, help, quit]
+    commands: [multiply, ping, iwantvi, iwantneovim, iwantemacs, idontwantvi, idontwantemacs, idontwantneovim, help, quit, q]
 });
 
 fn main() {
@@ -105,7 +106,7 @@ fn main() {
 
     client.with_framework(
         StandardFramework::new()
-            .configure(|c| c.owners(owners).prefix("~"))
+            .configure(|c| c.owners(owners).prefix(":"))
             .group(&GENERAL_GROUP),
     );
 

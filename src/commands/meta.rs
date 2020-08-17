@@ -16,6 +16,17 @@ fn help(ctx: &mut Context, msg: &Message) -> CommandResult {
     Ok(())
 }
 
+#[command]
+fn q(ctx: &mut Context, msg: &Message) -> CommandResult {
+    let mut member = ctx
+        .http
+        .get_member(648963701734506497, *msg.author.id.as_u64())
+        .unwrap();
+    let _ = member.add_role(&ctx, RoleId(648972141169213440));
+    msg.channel_id.say(&ctx.http, "I GNU it--you're verified.");
+    Ok(())
+}
+
 // really just an example of how shit works
 #[command]
 fn iwantemacs(ctx: &mut Context, msg: &Message) -> CommandResult {
