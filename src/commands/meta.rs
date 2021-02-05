@@ -141,7 +141,7 @@ fn ynix(ctx: &mut Context, msg: &Message) -> CommandResult {
 }
 
 #[command] // TODO: Fill this content in
-fn ynix(ctx: &mut Context, msg: &Message) -> CommandResult {
+fn ygentoo(ctx: &mut Context, msg: &Message) -> CommandResult {
     msg.channel_id.say(&ctx.http, "
     **Why Gentoo?**
 
@@ -172,6 +172,7 @@ Here's a controversial opinion - Gentoo is simple. It's just simple. How do I in
     Gentoo representative(s) in Vi-tality.
 
     ");
+    Ok(())
 }
 
 #[command]
