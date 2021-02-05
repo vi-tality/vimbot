@@ -80,7 +80,7 @@ impl EventHandler for Handler {
 group!({
     name: "general",
     options: {},
-    commands: [multiply, ping, iwantvi, iwantneovim, iwantemacs, idontwantvi, idontwantemacs, idontwantneovim, help, quit, q, ynix, gDots, jDots, zDots, kDots, pins, neovitality]
+    commands: [multiply, ping, iwantvi, iwantneovim, iwantemacs, idontwantvi, idontwantemacs, idontwantneovim, help, quit, q, ynix, gDots, jDots, zDots, kDots, pins, neovitality, insultCindy, yflakes]
 });
 
 fn main() {

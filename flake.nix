@@ -16,9 +16,9 @@
       defaultPackage = packages.vimbot;
 
       apps.vimbot = utils.lib.mkApp {
-        drv = packages.nix-autobahn;
+        drv = packages.nix-vimbot;
       };
-      defaultApp = apps.nix-autobahn;
+      defaultApp = apps.nix-vimbot;
 
       devShell = pkgs.mkShell {
         nativeBuildInputs = with pkgs; [ rustc cargo ];
