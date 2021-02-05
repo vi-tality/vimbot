@@ -13,3 +13,15 @@ pub fn multiply(ctx: &mut Context, msg: &Message, mut args: Args) -> CommandResu
 
     Ok(())
 }
+
+#[command]
+pub fn divide(ctx: &mut Context, msg: &Message, mut args: Args) -> CommandResult {
+    let one = args.single::<f64>().unwrap();
+    let two = args.single::<f64>().unwrap();
+
+    let quotient = one / two;
+
+    let _ = msg.channel_id.say(&ctx.http, quotient);
+
+    Ok(())
+}
