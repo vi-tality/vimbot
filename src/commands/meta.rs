@@ -140,6 +140,40 @@ fn ynix(ctx: &mut Context, msg: &Message) -> CommandResult {
     Ok(())
 }
 
+#[command] // TODO: Fill this content in
+fn ynix(ctx: &mut Context, msg: &Message) -> CommandResult {
+    msg.channel_id.say(&ctx.http, "
+    **Why Gentoo?**
+
+    **1. Customizability**
+    Every Gentoo installation has many, many, many steps. This makes people skeptical - but I counter that they are simply afraid to try it out. In truth, Gentoo's installation takes a bit because you go from scratch. Gentoo has actually been recommended to people as an alternative to LFS systems. Hence, it's easy to see why Gentoo is so customizable. 
+    **2. No install is the same**
+    This was told to me by NeddySeagoon, one of the Gentoo Forums top administrators. Not only is no single install the same, but each install is unique. This means that you're not just a common user. You're the master of your computer. This overlaps much with point #1. 
+    **3. Knowledge**
+    One cannot imagine the amount of knowledge you gain from installing Gentoo. Believe me. You can go from a bare, naked system, to the sexiest thing there is. You gain knowledge on a lot of Linux's quirks, ups and downs. Gentoo manually teaches you every bit there is to know about Linux systems. Which leads us to our next point...
+    **4. The Handbook is amazing**
+    Stop. You can't resist. The Gentoo handbook is freaking amazing. Like, seriously. The handbook goes over MULTIPLE architectures, MULTIPLE install types, and MULTIPLE variations of your files.
+    **5. The community is one of the best**
+    This struck me when I started using Gentoo. I expected a bunch of Elitists like Arch users. But what I received was welcoming arms. When I first installed Gentoo, I had some problems - all which were solved in a snap in the Gentoo Forums. These are the crazy active, worldwide, forums. And let's not talk about the IRC chats for Gentoo, Gentoo Ebuild Developers, and so on and so on and so on. Also, here's a tunnel to the Gentoo Discord, if you're interested: <https://discord.gg/gentoo>.
+
+    **6. Portage is amazing*
+    Portage is probably the most versatile Package Manager I've seen. You get a make.conf, can pass env variables, have amazing support for dependency management, and can understand how it works in a snap. Who wouldn't want that?
+    **7. Support for your favorite compiler. **
+    Yeah, that's right. You can tell Gentoo to use ccache distcc gcc, and it will do exactly that. Oh, and did I mention that's from your make.conf I mentioned earlier? Anyways...
+    **8. Simplicity**
+Here's a controversial opinion - Gentoo is simple. It's just simple. How do I install a package? `emerge dev-lang/rust`. That's it. That's all. Uninstall it? emerge --unmerge dev-lang/rust. Check it's dependencies before uninstalling? (or check if anything depends on it) emerge -pv --depclean dev-lang/rust. Update the world set? emerge --ask @world. I could go on, and on, and on...
+
+    There's a ton more that can be found and written down. Feel free to submit a PR with your reasons of using Gentoo!
+
+    Want to get started? Check out the wiki, join the community, or find your way around. Gentoo is the best experience you'll ever have.
+
+    With love,
+
+    Gentoo representative(s) in Vi-tality.
+
+    ");
+}
+
 #[command]
 fn jDots(ctx: &mut Context, msg: &Message) -> CommandResult {
     msg.channel_id.say(&ctx.http,
@@ -150,6 +184,13 @@ fn jDots(ctx: &mut Context, msg: &Message) -> CommandResult {
 #[command]
 fn zDots(ctx: &mut Context, msg: &Message) -> CommandResult {
     msg.channel_id.say(&ctx.http, "Zacks dotfiles? awww yee darwin flakes sexy af <https://github.com/zachcoyle/nix-config>");
+    Ok(())
+}
+
+#[command]
+fn bDots(ctx: &mut Context, msg: &Message) -> CommandResult {
+    msg.channel_id.say(&ctx.http,
+        "Why does everyone put stuff in here? Well, I guess I'll introduce my dots. I use Gentoo - you'll find my make.conf in there. I use neovim most of the time - my configs are there too. You'll also find `dwm`, `alacritty`, etc. Anyways - they're all yours! <https://github.com/bobbbay/dotfiles>.");
     Ok(())
 }
 
