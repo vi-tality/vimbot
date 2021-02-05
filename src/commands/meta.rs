@@ -183,7 +183,7 @@ fn gDots(ctx: &mut Context, msg: &Message) -> CommandResult {
 
 #[command]
 fn kDots(ctx: &mut Context, msg: &Message) -> CommandResult {
-    msg.channel_id.say(&ctx.http, "Arks doots. He got some smexy haskell: <https://github.com/pnotequalnp/nixos>");
+    msg.channel_id.say(&ctx.http, "Arks doots. He got some smexy haskell: <https://github.com/pnotequalnp/nix-config>");
     Ok(())
 }
 
