@@ -1,127 +1,64 @@
-//!Requires the 'framework' feature flag be enabled in your project's
-//! `Cargo.toml`.
-//!
-//! This can be enabled by specifying the feature in the dependency section:
-//!
-//! ```toml
-//! [dependencies.serenity]
-//! git = "https://github.com/serenity-rs/serenity.git"
-//! features = ["framework", "standard_framework"]
-//! ```
 mod commands;
+use commands::{math::*, meta::*};
 
-use log::{error, info};
+use std::env;
+
 use serenity::{
-    client::bridge::gateway::ShardManager,
-    framework::{standard::macros::group, StandardFramework},
-    model::{
-        event::ResumedEvent,
-        gateway::Ready,
-        guild::Member,
-        id::{ChannelId, GuildId, RoleId},
-        user::User,
+    async_trait,
+    model::{channel::Message, gateway::Ready},
+    framework::standard::{
+        StandardFramework,
+        CommandResult,
+        macros::{
+            command,
+            group
+        }
     },
     prelude::*,
 };
-use std::{collections::HashSet, env, sync::Arc};
 
-use commands::{math::*, meta::*, owner::*};
-
-struct ShardManagerContainer;
-
-impl TypeMapKey for ShardManagerContainer {
-    type Value = Arc<Mutex<ShardManager>>;
-}
+#[group]
+#[commands(multiply, divide, ping, iwantvi, iwantneovim, iwantemacs, idontwantvi, idontwantemacs, idontwantneovim, help, q, ynix, gDots, jDots, zDots, kDots, pins, neovitality, insultCindy, yflakes, ygentoo, bDots, gytisPowers, test_embed )]
+struct General;
 
 struct Handler;
 
+#[async_trait]
 impl EventHandler for Handler {
-    fn ready(&self, _: Context, ready: Ready) {
-        info!("Connected as {}", ready.user.name);
-    }
-
-    fn resume(&self, _: Context, _: ResumedEvent) {
-        info!("Resumed");
-    }
-    fn guild_member_addition(&self, ctx: Context, _guild_id: GuildId, mut member: Member) {
-        let user_id = member.user_id();
-        let channel_id = env::var("CHANNEL_ID")
-            .unwrap()
-            .parse::<u64>()
-            .expect("Expected a CHANNEL_ID in the environment");
-        let role_id = env::var("ROLE_ID")
-            .unwrap()
-            .parse::<u64>()
-            .expect("Expected a ROLE_ID in the environment");
-        let _ = ChannelId(channel_id).say(&ctx.http, format!(r#"**`:normal iHi `**  {}  **`, you are our`**`<C-r>=GetDiscordUsers("{:?}")<CR>`**`user in this community of vim enthusiasts.`**"#, member.mention(), user_id.as_u64()));
-
-        if let Err(e) = member.add_role(&ctx, RoleId(role_id)) {
-            error!("Unable to add roles to {}: {}", member.display_name(), e);
-        }
-    }
-
-    fn guild_member_removal(
-        &self,
-        ctx: Context,
-        _guild: GuildId,
-        user: User,
-        _member_data_if_available: Option<Member>,
-    ) {
-        let _ = ChannelId(649328791692247053).say(
-            &ctx.http,
-            format!(
-                "Oof. {} started using emacs. What a gnuisance D:",
-                user.mention()
-            ),
-        );
+    // Set a handler to be called on the `ready` event. This is called when a
+    // shard is booted, and a READY payload is sent by Discord. This payload
+    // contains data like the current user's guild Ids, current user data,
+    // private channels, and more.
+    //
+    // In this case, just print what the current user's username is.
+    async fn ready(&self, _: Context, ready: Ready) {
+        println!("{} is connected!", ready.user.name);
     }
 }
 
-group!({
-    name: "general",
-    options: {},
-    commands: [multiply, divide, ping, iwantvi, iwantneovim, iwantemacs, idontwantvi, idontwantemacs, idontwantneovim, help, quit, q, ynix, gDots, jDots, zDots, kDots, pins, neovitality, insultCindy, yflakes, ygentoo, bDots]
-});
+#[tokio::main]
+async fn main() {
+    let framework = StandardFramework::new()
+        .configure(|c| c.prefix(":")) // set the bot's prefix to "~"
+        .group(&GENERAL_GROUP);
+    // Configure the client with your Discord bot token in the environment.
+    let token = env::var("DISCORD_TOKEN")
+        .expect("Expected a token in the environment");
 
-fn main() {
-    // This will load the environment variables located at `./.env`, relative to
-    // the CWD. See `./.env.example` for an example on how to structure this.
-    kankyo::load();
+    // Create a new instance of the Client, logging in as a bot. This will
+    // automatically prepend your bot token with "Bot ", which is a requirement
+    // by Discord for bot users.
+    let mut client = Client::builder(&token)
+        .event_handler(Handler)
+        .framework(framework)
+        .await
+        .expect("Err creating client");
 
-    // Initialize the logger to use environment variables.
+    // Finally, start a single shard, and start listening to events.
     //
-    // In this case, a good default is setting the environment variable
-    // `RUST_LOG` to debug`.
-    env_logger::init();
-
-    let token = env::var("DISCORD_TOKEN").expect("Expected a DISCORD_TOKEN in the environment");
-
-    let mut client = Client::new(&token, Handler).expect("Err creating client");
-
-    {
-        let mut data = client.data.write();
-        data.insert::<ShardManagerContainer>(Arc::clone(&client.shard_manager));
+    // Shards will automatically attempt to reconnect, and will perform
+    // exponential backoff until it reconnects.
+    if let Err(why) = client.start().await {
+        println!("Client error: {:?}", why);
     }
-
-    let owners = match client.cache_and_http.http.get_current_application_info() {
-        Ok(info) => {
-            let mut set = HashSet::new();
-            set.insert(info.owner.id);
-
-            set
-        }
-        Err(why) => panic!("Couldn't get application info: {:?}", why),
-    };
-
-    client.with_framework(
-        StandardFramework::new()
-            .configure(|c| c.owners(owners).prefix(":"))
-            .group(&GENERAL_GROUP),
-    );
-
-    if let Err(why) = client.start() {
-        error!("Client error: {:?}", why);
-    }
-
-    //println!("join link: https://discordapp.com/api/oauth2/authorize?client_id={:}&permissions=0&scope=bot", client.user);
 }
