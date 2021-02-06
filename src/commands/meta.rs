@@ -140,7 +140,7 @@ fn ynix(ctx: &mut Context, msg: &Message) -> CommandResult {
     Ok(())
 }
 
-#[command] // TODO: Fill this content in
+#[command] 
 fn ygentoo(ctx: &mut Context, msg: &Message) -> CommandResult {
     msg.channel_id.say(&ctx.http, "
     **Why Gentoo?**
@@ -155,7 +155,8 @@ fn ygentoo(ctx: &mut Context, msg: &Message) -> CommandResult {
     Stop. You can't resist. The Gentoo handbook is freaking amazing. Like, seriously. The handbook goes over MULTIPLE architectures, MULTIPLE install types, and MULTIPLE variations of your files.
     **5. The community is one of the best**
     This struck me when I started using Gentoo. I expected a bunch of Elitists like Arch users. But what I received was welcoming arms. When I first installed Gentoo, I had some problems - all which were solved in a snap in the Gentoo Forums. These are the crazy active, worldwide, forums. And let's not talk about the IRC chats for Gentoo, Gentoo Ebuild Developers, and so on and so on and so on. Also, here's a tunnel to the Gentoo Discord, if you're interested: <https://discord.gg/gentoo>.
-
+    ");
+    msg.channel_id.say(&ctx.http, "
     **6. Portage is amazing*
     Portage is probably the most versatile Package Manager I've seen. You get a make.conf, can pass env variables, have amazing support for dependency management, and can understand how it works in a snap. Who wouldn't want that?
     **7. Support for your favorite compiler. **
