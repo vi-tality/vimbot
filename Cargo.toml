@@ -7,5 +7,9 @@ edition = "2018"
 
 [dependencies]
 rand = "0.8.3"
-serenity = { version = "0.10.2", default-features = false, features = ["framework", "standard_framework", "client", "gateway", "rustls_backend", "model"] }
+serenity = { version = "0.10.2", default-features = false, features = ["framework", "standard_framework", "client", "gateway", "rustls_backend", "model", "voice"] }
 tokio = { version = "1.0", features = ["macros", "rt-multi-thread"] }
+songbird = { git = "https://github.com/serenity-rs/songbird", branch = "current"}
+tracing = "0.1"
+tracing-subscriber = "0.2"
+tracing-futures = "0.2"
