@@ -44,21 +44,21 @@ async fn ping(ctx: &Context, msg: &Message) -> CommandResult {
 
 // really just an example of how shit works
 #[command]
-async fn help(ctx: &Context, msg: &Message) -> CommandResult {
+async fn man(ctx: &Context, msg: &Message) -> CommandResult {
     msg.channel_id.say(ctx, "available commands: iwantemacs, iwantneovim, iwantvi, idontwantemacs, idontwantvi, idontwantneovim, jDots, gDots, kDots, zDots, ynix, pins, neovitality, yflakes, insultCindy, gytisPowers");
     Ok(())
 }
 
-#[command]
-async fn q(ctx: &Context, msg: &Message) -> CommandResult {
-    let mut member = ctx
-        .http
-        .get_member(648963701734506497, *msg.author.id.as_u64()).await?
-        ;
-    let _ = member.add_role(&ctx, RoleId(648972141169213440));
-    msg.channel_id.say(ctx, "I GNU it--you're verified.");
-    Ok(())
-}
+//#[command]
+//async fn q(ctx: &Context, msg: &Message) -> CommandResult {
+    //let mut member = ctx
+        //.http
+        //.get_member(648963701734506497, *msg.author.id.as_u64()).await?
+        //;
+    //let _ = member.add_role(&ctx, RoleId(648972141169213440));
+    //msg.channel_id.say(ctx, "I GNU it--you're verified.");
+    //Ok(())
+//}
 
 // really just an example of how shit works
 #[command]
@@ -194,7 +194,7 @@ async fn ygentoo(ctx: &Context, msg: &Message) -> CommandResult {
     **5. The community is one of the best**
     This struck me when I started using Gentoo. I expected a bunch of Elitists like Arch users. But what I received was welcoming arms. When I first installed Gentoo, I had some problems - all which were solved in a snap in the Gentoo Forums. These are the crazy active, worldwide, forums. And let's not talk about the IRC chats for Gentoo, Gentoo Ebuild Developers, and so on and so on and so on. Also, here's a tunnel to the Gentoo Discord, if you're interested: <https://discord.gg/gentoo>.
     ```
-    ");
+    ").await?;
     msg.channel_id.say(ctx, "
     ```
     **6. Portage is amazing*
@@ -231,9 +231,23 @@ async fn zDots(ctx: &Context, msg: &Message) -> CommandResult {
 }
 
 #[command]
-async fn bDots(ctx: &Context, msg: &Message) -> CommandResult {
+async fn bobbbaydoots(ctx: &Context, msg: &Message) -> CommandResult {
     msg.channel_id.say(ctx,
         "Why does everyone put stuff in here? Well, I guess I'll introduce my dots. I use Gentoo - you'll find my make.conf in there. I use neovim most of the time - my configs are there too. You'll also find `dwm`, `alacritty`, etc. Anyways - they're all yours! <https://github.com/bobbbay/dotfiles>.").await?;
+    Ok(())
+}
+
+#[command]
+async fn brandoots(ctx: &Context, msg: &Message) -> CommandResult {
+    msg.channel_id.say(ctx,
+        "brans epic rice: <https://www.github.com/branwright1/non-flaked-nix/tree/master/>").await?;
+    Ok(())
+}
+
+#[command]
+async fn ldoots(ctx: &Context, msg: &Message) -> CommandResult {
+    msg.channel_id.say(ctx,
+        "lucrs stylin doots: <https://github.com/luc65r/nixconf>").await?;
     Ok(())
 }
 
@@ -243,19 +257,31 @@ async fn neovitality(ctx: &Context, msg: &Message) -> CommandResult {
     Ok(())
 }
 
+pub enum whoToInsult {
+    Cindy
+}
+
+pub fn get_insult(who: whoToInsult) -> String {
+    let random_value : u8 = (rand::thread_rng()).gen();
+    match who {
+        Cindy =>
+            match random_value % 8 {
+              0 => String::from(""),
+              1 => String::from(""),
+              2 => String::from(""),
+              3 => String::from(""),
+              4 => String::from(""),
+              5 => String::from(""),
+              6 => String::from(""),
+              7 => String::from(""),
+              _ => String::from(""),
+            }
+    }
+}
+
 #[command]
 async fn insultCindy(ctx: &Context, msg: &Message) -> CommandResult {
-    let random_value : u8 = (rand::thread_rng()).gen();
-    match random_value % 8 {
-      0 => msg.channel_id.say(ctx, "HAHA").await?,
-      1 => msg.channel_id.say(ctx, "HAHA").await?,
-      2 => msg.channel_id.say(ctx, "HAHA").await?,
-      3 => msg.channel_id.say(ctx, "HAHA").await?,
-      4 => msg.channel_id.say(ctx, "HAHA").await?,
-      5 => msg.channel_id.say(ctx, "HAHA").await?,
-      6 => msg.channel_id.say(ctx, "HAHA").await?,
-      _ => msg.channel_id.say(ctx, "HAHA").await?
-    };
+    msg.channel_id.say(ctx, get_insult(whoToInsult::Cindy)).await?;
     Ok(())
 }
 
