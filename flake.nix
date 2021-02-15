@@ -17,7 +17,10 @@
            })
          ];
        };
-      naersk-lib = naersk.lib."${system}";
+      naersk-lib = naersk.lib."${system}".override {
+        rustc = pkgs.rustc;
+        cargo = pkgs.cargo;
+      };
     in rec {
       packages.vimbot = naersk-lib.buildPackage {
         pname = "vimbot";
@@ -29,7 +32,7 @@
       apps.vimbot = utils.lib.mkApp {
         drv = packages.nix-vimbot;
       };
-      defaultApp = apps.nix-vimbot;
+      defaultApp = apps.vimbot;
 
       devShell = pkgs.mkShell {
         nativeBuildInputs = with pkgs; [ rustc cargo libopus ffmpeg pkgconfig];
