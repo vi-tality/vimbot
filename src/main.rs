@@ -42,7 +42,7 @@ use serenity::{
 };
 
 #[group]
-#[commands(multiply, divide, ping, iwantvi, iwantneovim, iwantemacs, idontwantvi, idontwantemacs, idontwantneovim, man, q, ynix, gDots, jDots, zDots, kDots, pins, neovitality, insultCindy, yflakes, ygentoo, bobbbaydoots, gytisPowers, test_embed,  deafen, join, leave, mute, p, fs, ping, undeafen, unmute, x, pq, resume, man, ldoots, brandoots)]
+#[commands(multiply, divide, ping, iwantvi, iwantneovim, iwantemacs, idontwantvi, idontwantemacs, idontwantneovim, man, q, ynix, gDots, jDots, zDots, kDots, bDots, pins, neovitality, insultCindy, yflakes, ygentoo, gytisPowers, test_embed,  deafen, join, leave, mute, p, fs, ping, undeafen, unmute, x, pq, resume, man, ldoots, brandoots)]
 struct General;
 
 struct Handler;
