@@ -45,7 +45,7 @@ async fn ping(ctx: &Context, msg: &Message) -> CommandResult {
 // really just an example of how shit works
 #[command]
 async fn man(ctx: &Context, msg: &Message) -> CommandResult {
-    msg.channel_id.say(ctx, "available commands: iwantemacs, iwantneovim, iwantvi, idontwantemacs, idontwantvi, idontwantneovim, jDots, gDots, kDots, zDots, ynix, pins, neovitality, yflakes, insultCindy, gytisPowers");
+    msg.channel_id.say(ctx, "available commands: iwantemacs, iwantneovim, iwantvi, idontwantemacs, idontwantvi, idontwantneovim, jDots, gDots, kDots, zDots, bDots, ynix, ygentoo, pins, neovitality, yflakes, insultCindy, gytisPowers");
     Ok(())
 }
 
@@ -180,7 +180,6 @@ async fn ynix(ctx: &Context, msg: &Message) -> CommandResult {
 #[command]
 async fn ygentoo(ctx: &Context, msg: &Message) -> CommandResult {
     msg.channel_id.say(ctx, "
-    ```
     **Why Gentoo?**
 
     **1. Customizability**
@@ -193,11 +192,9 @@ async fn ygentoo(ctx: &Context, msg: &Message) -> CommandResult {
     Stop. You can't resist. The Gentoo handbook is freaking amazing. Like, seriously. The handbook goes over MULTIPLE architectures, MULTIPLE install types, and MULTIPLE variations of your files.
     **5. The community is one of the best**
     This struck me when I started using Gentoo. I expected a bunch of Elitists like Arch users. But what I received was welcoming arms. When I first installed Gentoo, I had some problems - all which were solved in a snap in the Gentoo Forums. These are the crazy active, worldwide, forums. And let's not talk about the IRC chats for Gentoo, Gentoo Ebuild Developers, and so on and so on and so on. Also, here's a tunnel to the Gentoo Discord, if you're interested: <https://discord.gg/gentoo>.
-    ```
     ").await?;
     msg.channel_id.say(ctx, "
-    ```
-    **6. Portage is amazing*
+    **6. Portage is amazing**
     Portage is probably the most versatile Package Manager I've seen. You get a make.conf, can pass env variables, have amazing support for dependency management, and can understand how it works in a snap. Who wouldn't want that?
     **7. Support for your favorite compiler. **
     Yeah, that's right. You can tell Gentoo to use ccache distcc gcc, and it will do exactly that. Oh, and did I mention that's from your make.conf I mentioned earlier? Anyways...
@@ -211,8 +208,6 @@ Here's a controversial opinion - Gentoo is simple. It's just simple. How do I in
     With love,
 
     Gentoo representative(s) in Vi-tality.
-    ```
-
     ").await?;
     Ok(())
 }
@@ -231,9 +226,9 @@ async fn zDots(ctx: &Context, msg: &Message) -> CommandResult {
 }
 
 #[command]
-async fn bobbbaydoots(ctx: &Context, msg: &Message) -> CommandResult {
+async fn bDots(ctx: &Context, msg: &Message) -> CommandResult {
     msg.channel_id.say(ctx,
-        "Why does everyone put stuff in here? Well, I guess I'll introduce my dots. I use Gentoo - you'll find my make.conf in there. I use neovim most of the time - my configs are there too. You'll also find `dwm`, `alacritty`, etc. Anyways - they're all yours! <https://github.com/bobbbay/dotfiles>.").await?;
+        "100% written in Nix :smirk: <https://github.com/bobbbay/dotfiles>").await?;
     Ok(())
 }
 

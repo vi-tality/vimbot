@@ -1,41 +1,33 @@
 {
   inputs = {
-    utils.url = "github:numtide/flake-utils";
-    naersk.url = "github:nmattia/naersk";
-    rust-overlay.url = "github:oxalica/rust-overlay";
+    utils.url = github:numtide/flake-utils;
+    naersk.url = github:nmattia/naersk;
+    rust-overlay.url = github:oxalica/rust-overlay;
   };
 
   outputs = { self, nixpkgs, utils, naersk, rust-overlay }:
     utils.lib.eachDefaultSystem (system:
-      let pkgs = import nixpkgs {
-         inherit system;
-         overlays = [
-           rust-overlay.overlay
-           (self: super: {
-             rustc = self.latest.rustChannels.nightly.rust;
-             cargo = self.latest.rustChannels.nightly.rust;
-           })
-         ];
-       };
-      naersk-lib = naersk.lib."${system}".override {
-        rustc = pkgs.rustc;
-        cargo = pkgs.cargo;
-      };
-    in rec {
-      packages.vimbot = naersk-lib.buildPackage {
-        pname = "vimbot";
-        root = ./.;
-        buildInputs = with pkgs; [libopus ffmpeg pkgconfig];
-      };
-      defaultPackage = packages.vimbot;
+      let
+        overlays = [
+          rust-overlay.overlay
+          (final: prev: {
+            rustc = final.latest.rustChannels.nightly.rust;
+            cargo = final.latest.rustChannels.nightly.rust;
+          })
+        ];
+        pkgs = import nixpkgs { inherit system overlays; };
+        naersk-lib = naersk.lib."${system}".override { inherit (pkgs) rustc cargo; };
+      in
+      rec {
+        defaultPackage = packages.vimbot;
+        packages.vimbot = naersk-lib.buildPackage {
+          pname = "vimbot";
+          root = ./.;
+          buildInputs = with pkgs; [ libopus ffmpeg pkgconfig ];
+        };
 
-      apps.vimbot = utils.lib.mkApp {
-        drv = packages.nix-vimbot;
-      };
-      defaultApp = apps.vimbot;
-
-      devShell = pkgs.mkShell {
-        nativeBuildInputs = with pkgs; [ rustc cargo libopus ffmpeg pkgconfig];
-      };
-    });
+        devShell = pkgs.mkShell {
+          nativeBuildInputs = with pkgs; [ rustc cargo libopus ffmpeg pkgconfig ];
+        };
+      });
 }
